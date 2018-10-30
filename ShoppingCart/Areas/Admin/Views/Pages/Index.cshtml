@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ShoppingCart.Models.ViewModels.Pages>
+
+@{
+    ViewBag.Title = "Pages";
+}
+
+<h2>Pages</h2>
+<p>
+    @Html.ActionLink("Add New Page", "AddPage")
+</p>
+@if (! Model.Any())
+{
+    <h1 class="text-center"> There is no pages</h1>
+    
+}
+else
+{
+  <table class="table sorting" id="pages">
+    <tr class="home" >
+        <th>
+            Title
+        </th>
+        <th>
+           Slub
+        </th>
+        <th>
+            Body
+        </th>
+        
+        <th>
+            Sidebar
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr id="id_@item.Id" class="@item.Slug">
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Slug)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Body)
+        </td>
+
+        <td>
+            @Html.CheckBoxFor(modelItem => item.HasSlidebar)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
+            @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
+            @if (item.Slug != "home")
+            {
+                @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "Delete" })
+
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+}
+
+@section scripts{
+
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script>
+    
+
+
+    //Confirm page delete
+    $(function() {
+        $("a.Delete").click(function() {
+            if (!confirm("confirm Page Deletion"))return false;
+        });
+    });
+
+
+    //Page sorting
+
+    $("table#pages tbody").sortable({
+        items: "tr:not(.home)",
+        placeholder: "ui-state-highlight",
+        update: function() {
+            var ids = $("table#pages tbody").sortable("serialize");
+            var url = "/Admin/pages/ReorderPages";
+        }
+    });
+</script>
+}
+

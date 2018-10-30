@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -160,19 +162,35 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Data\Pages_tbl.cs">
+      <DependentUpon>ShoppingCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\ShoppingCart.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShoppingCart.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\ShoppingCart.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShoppingCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Data\ShoppingCart.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShoppingCart.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ViewModels\Pages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\shoppingCart.mdf" />
-    <Content Include="App_Data\shoppingCart_log.ldf">
-      <DependentUpon>shoppingCart.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -185,6 +203,27 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <EntityDeploy Include="Models\Data\ShoppingCart.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShoppingCart.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Data\ShoppingCart.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShoppingCart.edmx</DependentUpon>
+      <LastGenOutput>ShoppingCart.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Data\ShoppingCart.edmx.diagram">
+      <DependentUpon>ShoppingCart.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Data\ShoppingCart.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShoppingCart.edmx</DependentUpon>
+      <LastGenOutput>ShoppingCart.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\AddPage.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\EditPage.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\PageDetails.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -212,10 +251,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\Data\" />
-    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -223,6 +261,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
